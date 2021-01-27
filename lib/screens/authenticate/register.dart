@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loginwithfirebase/services/auth.dart';
 
 class Register extends StatefulWidget {
+  final Function toggleView;
+  Register({this.toggleView});
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -20,6 +23,21 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Create Account'),
+        actions: [
+          FlatButton.icon(
+            onPressed: () {
+              widget.toggleView();
+            },
+            icon: Icon(
+              Icons.lock_open,
+              color: Colors.white,
+            ),
+            label: Text(
+              'Existing User',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
