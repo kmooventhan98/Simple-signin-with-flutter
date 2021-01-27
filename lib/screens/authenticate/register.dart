@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginwithfirebase/services/auth.dart';
+import 'package:loginwithfirebase/shared/constants.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -11,9 +12,11 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 //textfield state
   String email = "";
   String password = "";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +33,9 @@ class _RegisterState extends State<Register> {
             },
             icon: Icon(
               Icons.lock_open,
-              color: Colors.white,
             ),
             label: Text(
               'Existing User',
-              style: TextStyle(color: Colors.white),
             ),
           )
         ],
@@ -42,12 +43,15 @@ class _RegisterState extends State<Register> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               SizedBox(
                 height: 20.0,
               ),
               TextFormField(
+                decoration: textInputDecoration,
+                validator: (val) => val.isEmpty ? 'Username' : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -56,6 +60,12 @@ class _RegisterState extends State<Register> {
                 height: 20.0,
               ),
               TextFormField(
+                decoration: textInputDecoration,
+                validator: (val) => val.isEmpty
+                    ? 'Password'
+                    : val.length < 8
+                        ? 'Minimum 8 characters'
+                        : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() => password = val);
@@ -67,13 +77,27 @@ class _RegisterState extends State<Register> {
               RaisedButton(
                 color: Colors.brown[400],
                 child: Text(
-                  'Create ',
+                  'Register ',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState.validate()) {
+                    dynamic result = await _auth.registerWithEmailAndPassword(
+                        email, password);
+                    if (result == null) {
+                      setState(() {
+                        error = 'Please enter valid details';
+                      });
+                    }
+                  }
                 },
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red),
               )
             ],
           ),
