@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:loginwithfirebase/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
-
 //textfield state
   String email = "";
   String password = "";
@@ -20,7 +19,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Login Here'),
+        title: Text('Create Account'),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
@@ -50,7 +49,7 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 color: Colors.brown[400],
                 child: Text(
-                  'Login',
+                  'Create ',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
