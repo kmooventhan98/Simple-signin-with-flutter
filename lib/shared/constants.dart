@@ -7,5 +7,5 @@ const textInputDecoration = InputDecoration(
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.brown, width: 2.0),
   ),
-  alignLabelWithHint: false,
+  alignLabelWithHint: true,
 );
